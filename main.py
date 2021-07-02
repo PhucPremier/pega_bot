@@ -28,55 +28,60 @@ keyboard = [
     ]
 ]
 
+def runBot(bot: TelegramClient):
+    
+    bot.connect()
+    print("bot started")
+
+    @bot.on(events.NewMessage)
+    async def handler(event):
+        print(event.message.peer_id, event.message.message)
+
+    # @bot.on(events.NewMessage(pattern="(?i).* hi|hello"))
+    # async def handler(event):
+    #     sender = await event.get_sender()
+    #     await event.respond(f"Hello, {sender.first_name} ✌️")
+
+    @bot.on(events.callbackquery.CallbackQuery(data = b"welcome"))
+    async def handler(event):
+        print("welcome")
+        await event.respond(welcome_str, buttons = keyboard)
+
+    @bot.on(events.callbackquery.CallbackQuery(data = b"what"))
+    async def handler(event):
+        print("what")
+        await event.respond(what_str, buttons = keyboard)
+
+    @bot.on(events.callbackquery.CallbackQuery(data = b"investment"))
+    async def handler(event):
+        print("investment")
+        await event.respond(investment_str, buttons = keyboard)
+
+    @bot.on(events.callbackquery.CallbackQuery(data = b"howto_trade"))
+    async def handler(event):
+        print("howto_trade")
+        await event.respond(howto_trade_str, buttons = keyboard)
+
+    @bot.on(events.callbackquery.CallbackQuery(data = b"howto_buy"))
+    async def handler(event):
+        print("howto_buy")
+        await event.respond(howto_buy_str, buttons = keyboard)
+
+    @bot.on(events.callbackquery.CallbackQuery(data = b"farm"))
+    async def handler(event):
+        print("farm")
+        await event.respond(farm_str, buttons = keyboard)
+
+    @bot.on(events.NewMessage(pattern="/information|/start"))
+    async def handler(event):
+        await event.respond("Which's information you want to know?", buttons = keyboard)
+
+    bot.run_until_disconnected()
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    with TelegramClient(USER_NAME, API_ID, API_HASH) as bot:
-        print('bot started')
-
-        @bot.on(events.NewMessage)
-        async def handler(event):
-            print(event.message.peer_id, event.message.message)
-
-        # @bot.on(events.NewMessage(pattern="(?i).* hi|hello"))
-        # async def handler(event):
-        #     sender = await event.get_sender()
-        #     await event.respond(f"Hello, {sender.first_name} ✌️")
-
-        @bot.on(events.callbackquery.CallbackQuery(data = b"welcome"))
-        async def handler(event):
-            print("welcome")
-            await event.respond(welcome_str, buttons = keyboard)
-
-        @bot.on(events.callbackquery.CallbackQuery(data = b"what"))
-        async def handler(event):
-            print("what")
-            await event.respond(what_str, buttons = keyboard)
-
-        @bot.on(events.callbackquery.CallbackQuery(data = b"investment"))
-        async def handler(event):
-            print("investment")
-            await event.respond(investment_str, buttons = keyboard)
-
-        @bot.on(events.callbackquery.CallbackQuery(data = b"howto_trade"))
-        async def handler(event):
-            print("howto_trade")
-            await event.respond(howto_trade_str, buttons = keyboard)
-
-        @bot.on(events.callbackquery.CallbackQuery(data = b"howto_buy"))
-        async def handler(event):
-            print("howto_buy")
-            await event.respond(howto_buy_str, buttons = keyboard)
-
-        @bot.on(events.callbackquery.CallbackQuery(data = b"farm"))
-        async def handler(event):
-            print("farm")
-            await event.respond(farm_str, buttons = keyboard)
-
-        @bot.on(events.NewMessage(pattern="/information|/start"))
-        async def handler(event):
-            await event.respond("Which's information you want to know?", buttons = keyboard)
-
-        bot.run_until_disconnected()
-        
+    bot = TelegramClient(USER_NAME, API_ID, API_HASH)
+    runBot(bot)
 
     
