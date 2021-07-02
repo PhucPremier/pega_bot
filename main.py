@@ -1,6 +1,5 @@
 from telethon.sync import TelegramClient, events, Button
 
-PHONE = '+84902809265'
 USER_NAME = '@jeffbazzoss'
 API_ID = '6813272'
 API_HASH = '0b058cdaf986f136d59ea5275b21634f'
@@ -29,7 +28,7 @@ keyboard = [
 ]
 
 def runBot(bot: TelegramClient):
-    
+
     bot.connect()
     print("bot started")
 
